@@ -1,0 +1,1360 @@
+#:import Factory kivy.factory.Factory
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:kivy 1.11.1
+
+<Manager>:
+    ScreenManager:
+        id: managerScreen
+        Screen:
+            canvas:
+                BorderImage :
+                    source:'Image/background.jpg'
+                    size: 800,580
+            name: 'Acceuil'
+            padding:[40,20,40,20]
+            BoxLayout:
+                cols: 5
+                
+                orientation: 'vertical'
+                padding:10
+                spacing: 10
+                BoxLayout:
+                    size_hint:1,0.6
+                    orientation: 'horizontal'
+                    Image:
+                        source: 'Image/Bulgin.jpg'       
+                        size_hint:0.5,1
+                        width: 1000
+                        height: 665                      
+                    Label:
+                        id:yahoo
+                        text: ''       
+                        size_hint:1.5,1
+                        font_size:70
+                        color:[1,0,0,1]
+
+                Label:
+                    text:'MODICS'
+                    color:0,0,0,1
+                    font_size:160
+                    size_hint:1,1
+                BoxLayout:
+                    orientation:'vertical'
+                    spacing:10
+                    Button:
+                        text: 'Démarrage'
+                        on_release: root.Btn_start()
+                        background_color: (0,0,1,1)
+                        font_size: 40
+                    Button:
+                        text: 'Resume'
+                        on_release: root.resume()
+                        background_color: (0,0,1,1)
+                        font_size: 40
+
+                    Spinner:
+                        id : spin1
+                        text: 'Signaler un Arrêt'
+                        font_size: 40
+                        values:['[C/M] Changement matière uniquement','[T/C/M] Changement moule et matière','[AM] Attente matière','[ME] Manque équipement','[TC] Changement moule','[PM] Problème moule au démarrage','[DM] Démontage moule','[MM] Montage moule','[MR] Manque régleur','[MO] Manque opérateur','[AD] Attente Démarrage','[MD] Manque dossier','[ATC] Attente changement moule','[MT] Problème Maintenance','[CC] Coupure du courant','[IM] Intervention moule','[NM] Nettoyage moule','[CV] Changement version','[VP] Validation Procès','[EM] Essai moule','[NW] Manque planification','[VQ] Validation Qualité']
+                        background_color: (0,0,1,1)
+                        on_text: root.on_spinner_select(self.text)
+               
+                    
+        Screen:
+            name: 'Setting'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1 , 0.3
+                   
+                    Label:
+                        size_hint:  0.3, 1
+                        font_size:50
+                        text: 'Configuration de fabrication'
+                        color : 0.68,1,0.68, 1
+                            
+                        
+                       
+
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    GridLayout:
+                        padding:[40,0,40,0]
+                        spacing:10
+                        cols: 2
+                        Label:
+                            text: 'Ordre de fabrication'
+                            color : 1,1,1,1
+                            font_size:30
+                        Button:
+                            id : ShopOrder
+                            font_size:40
+                            text: ''
+                            background_color: (0,0,1,1)
+                            color : 1,1,1,1
+                            on_press: root.Btn_shop_order()
+                        Label:
+                            text: 'Numéro de tools'
+                            color : 1,1,1,1
+                            font_size:30
+                          
+                        Button:
+                            id : touls
+                            font_size:40
+                            text: ''
+                            background_color: (0,0,1,1)
+                            color : 1,1,1,1
+                            on_press: root.Btn_touls()
+                        Label:
+                            text: 'Nombre des empreintes'
+                            color : 1,1,1,1
+                            font_size:30
+                        
+                        Button:
+                            id : Empreint
+                            font_size:40
+                            text: '0'
+                            background_color: (0,0,1,1)
+                            color : 1,1,1,1
+                            on_press: root.Btn_empreint()
+                        Label:
+                            text: 'Quantités demandées'
+                            color : 1,1,1,1
+                            font_size:30
+                            
+                        Button:
+                            id: quantite
+                            font_size:40
+                            text: '0'
+                            background_color: (0,0,1,1)
+                            color : 1,1,1,1
+                            on_press: root.Btn_qantite_demande()
+                        Label:
+                            text: 'Temps de cycle'
+                            color : 1,1,1,1
+                            font_size:30
+                            
+                        Button:
+                            id: cycle_t
+                            font_size:40
+                            text: '0'
+                            background_color: (0,0,1,1)
+                            color : 1,1,1,1
+                            on_press: root.Btn_cycle_time()
+
+                    GridLayout:
+                    	size_hint: 1 , 0.2
+                    	cols: 2
+                    	spacing:20
+                    	Button:
+                            text: 'Production'
+                            size_hint: 1,0.3
+                            font_size:40
+                            on_press: root.Btn_production()
+                            color : 1,1,1,1
+                            background_color: (0,0,1,1)
+                    	Button:
+                    	    on_press: root.Btn_retour()
+                    	    text:'retour'
+                    	    size_hint: 0.2,0.3
+                            color:[0,0,0,1]
+                            background_color: (255,255,0,1)
+                        
+                            
+        Screen:
+            canvas:
+                BorderImage :
+                    id:border
+                    source:'Image/background.jpg'
+                    size: 800,580        
+            name:'Production'          
+            BoxLayout:
+                spacing:10
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                
+                GridLayout:
+                    orientation:'horizontal'
+                    size_hint: 1, 0.1
+                    cols:3
+                    Label:
+                        id:cas
+                        text:'Attente Validation Réglage'
+                        font_size:30
+                        size_hint:0.6,1    
+                        color:0,255,0,0.8
+                    GridLayout:
+                        orientation:'vertical'
+                        size_hint: 1, 0.1
+                        cols:1
+                        Label:
+                            id:start
+                            text:''
+                            font_size:25
+                            color:0,0,0,1    
+                        Label:
+                            id:horloge
+                            text:''
+                            font_size:25
+                            color : 0,0,0,1
+                    Button:
+                        id: TRS
+                        text:'TRS = '
+                        font_size:20
+                        size_hint:0.5,0.3 
+                           
+                            
+                         
+                                           
+
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    GridLayout:
+                        padding:[40,0,40,0]
+                        spacing:10
+                        size_hint:1,1.2
+                        cols: 4
+                        canvas.before:
+                            
+                            Color:
+                                rgba: 0,0,255,1
+                            Rectangle:
+                                pos : self.pos
+                                size: self.size
+                                
+                        Label:
+                            text: 'OF'
+                            color : 0,0,0,1
+                            font_size:30
+                        Label:
+                            text: 'TOOL'
+                            color : 0,0,0,1
+                            font_size:30
+                        Label:
+                            text:'EMPREINTES'
+                            color : 0,0,0,1
+                            font_size:30
+                        Label:
+                            text:'CYCLE'
+                            color:0,0,0,1
+                            font_size:30
+                        Label:
+                            id : ShopOrder1
+                            text:'X15241/2'
+                            
+                            font_size:30
+                        Label:
+                            id : touls1
+                            text: 'Toul1'
+                            
+                            font_size:30
+                        Label:
+                            id : Empreint1
+                            text: '8'
+                            
+                            font_size:30
+                        Label:
+                            id:cycle1
+                            text:'wait...'
+                           
+                            font_size:30
+                    
+                    GridLayout:
+                        size_hint:1,1.5
+                        cols : 3
+                        Label:
+                            text: 'Quantités produites'
+                            color : 0,0,0,1
+                            font_size:20
+                           
+                        Button:        
+                            text: 'Quantités Bon'
+                            on_release: root.Btn_ajout_bon()
+                            font_size:20
+                            size_hint:0.1,3
+                            background_color: [0,255,0,0.8]
+                            color : 0,0,0,1
+                        Button:        
+                            text: 'Quantités rejets'
+                            on_release: root.Btn_ajout_rejet()
+                            font_size:20
+                            
+                            size_hint:0.1,3
+                            background_color: [1,0,0,1]
+                        
+                        Label:
+                        Label:
+                        Label:    
+                        Label:
+                            id:qtProduite
+                            text: '0'
+                            color : 0,0,0,1
+                            font_size:30
+                        Label:
+                            id:qtBon
+                            text: '0'
+                            color : 0,0,0,1
+                            font_size:30
+
+                            
+                        Label:
+                            id:qtRejet
+                            color:0,0,0,1
+                            text:'0'
+                            font_size:30
+                    ProgressBar:
+                        id:progression
+                        min:0
+                        max:100
+                        value: 50
+                        color : 0,0,0,1
+                    GridLayout:
+                        cols:3
+                        
+                        Label:
+                 
+                            text: 'Quantités restantes'
+                            color:[0,0,0,1]
+                            font_size:20
+                        Label:
+                            id :step
+                        Label:
+                            text: 'Quantités Planifiées'
+                            color : 0,0,0,1
+                            font_size:20
+                            
+                        
+                        Label:
+                            id:qtRestante
+                            color : 0,0,0,1
+                            text: '100'
+                            font_size:30
+                        Label:
+                        Label:
+                            id:quantite1
+                            color : 0,0,0,1
+                            font_size:30
+                            text: ''
+                        
+
+   
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint:1,1.2
+                        Button:
+                            id : Arrets
+                            size_hint:2,1
+                            text: 'Signaler un Arrêt'
+                            font_size:25
+                            background_color: (0,0,1,1)
+            	            on_press: root.Btn_select_arret()
+
+                        Button:                           
+                            text: 'Fin Arrêt'
+                            on_press: root.Btn_fin_arret_p()
+                            background_color: (0,0,1,1)
+                            font_size:25
+                        Button:
+                            id:valid_reglage
+                            text: 'Validation Reglage'
+                            on_release: root.Btn_Valid_Reglage()
+                            background_color: [1,0,0,1]
+                            font_size:20
+                    BoxLayout:
+                        size_hint:1,1.2
+                        orientation:'horizontal'
+                        Button:
+                            text: 'Fin de Production'
+                            on_release: root.Btn_fin_shopOrder()
+                            background_color: (1,0,0,1)
+                            font_size:25
+                            size_hint:3,1
+                        
+                        Spinner:
+                            id:valid_qualite
+                            text: 'Validation Finale'
+                            values:['Validé','Non Validé']
+                            on_text: root.Btn_Valid_qualite(self.text)
+                            background_color: (0,0,1,1) 
+                            font_size:20                     
+              
+              
+        Screen:
+            name:'Arret'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1 , 0.3
+                    
+                    Label:
+                        id:typeArret
+                 
+                        text: 'fermeture des empreintes'
+                        color : 0.68,1,0.68, 1
+                        font_size:60
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    Label:
+                    GridLayout:
+                        padding:[40,0,40,0]
+                        spacing:10
+                        cols: 1                      
+                        Button :
+                            id : ferme_emprient
+                            text: 'Saisie le nombre des empreintes ici '
+                            on_press: root.Btn_fermer_emprient()
+          
+                        GridLayout:
+                            cols:2
+                        
+                            Button:
+                                text: 'OK'
+                                background_color: (1.0,0.0,0.0,1.0)   
+                                on_press: root.Btn_fin_arret()
+                                
+                            Button:
+                                text: 'Annuler'
+                                background_color: (1.0,0.0,0.0,1.0)   
+                                on_press: root.Btn_Annule_ferme()
+
+        Screen:
+            name: 'keyboardInputNum'
+            FloatLayout:
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: [40,40,40,40]
+                    Label:
+                        id :keyboardinputInt
+                        color : 0.68,1,0.68, 1
+                        size_hint: 1 , 0.5
+                        font_size:40
+                        text:'test'
+                    Label:
+                        size_hint: 0.96 , 0.5
+                        color: 1,0,0,1
+                        pos_hint : {'x' : 0.02}
+                        id: entry1
+                        font_size:50
+                        canvas.before:
+                            Color:
+                                rgba: 255,255,255,255
+                            Rectangle:
+                                pos : self.pos
+                                size: self.size
+
+                    GridLayout:
+                        size_hint: 1 ,2
+                        cols: 5
+                        rows : 5
+                        padding: 15
+                        Label:
+
+                        Button :
+                            text: '7'
+                            on_press: entry1.text +=self.text
+                            font_size:40
+                        Button :
+                            text: '8'
+                            on_press: entry1.text +=self.text
+                            font_size:40
+                        Button :
+                            text: '9'
+                            on_press: entry1.text +=self.text
+                            font_size:40
+
+                        Label:
+                        Label:
+
+                        Button :
+                            text: '4'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                        Button :
+                            text: '5'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                        Button :
+                            text: '6'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+
+                        Button :
+                            id:t
+                            text: 'T'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                            background_color: (0,0,0,1)
+                            color:0,0,0,1
+                        Label:
+
+                        Button :
+                            text: '1'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                        Button :
+                            text: '2'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                        Button :
+                            text: '3'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+
+                        Button :
+                            id:n
+                            text: 'N'
+                            font_size:40
+                            background_color: (0,0,0,1)
+                            on_press: entry1.text +=self.text
+                            color:0,0,0,1
+                        Button:
+                            text:'retour'
+                            font_size:30
+                            color:[0,0,0,1]
+                            background_color: (255,255,0,1)
+                            on_press: root.Btn_fail()
+
+
+
+                        Button :
+                            id : vergul
+                            font_size:40
+                            text: '.'
+                            on_press:if keyboardinputInt.text =='temps de cycle'or keyboardinputInt.text=='nouveaux temps de cycle': entry1.text +=self.text
+                        Button :
+                            text: '0'
+                            font_size:40
+                            on_press: entry1.text +=self.text
+                        Button :
+                            text: '<--'
+                            font_size:40
+                            on_press: entry1.text = entry1.text[0 : len(entry1.text)-1]
+
+
+                        Button :
+                            text: 'Suivant'
+                            font_size:30
+                            color:[0,0,0,1]
+                            background_color: (0,255,0,1.0)
+                            on_press: root.Btn_keyboard_int()
+        Screen:
+            name : 'keyboardInputArrets'
+            BoxLayout:
+                orientation: 'vertical'
+
+                GridLayout:
+                    cols: 10
+                    rows : 7
+                    padding: 20
+                    Button :
+                        text: '0'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '1'
+                        on_press: Arrets.text = self.text
+                        on_release: root.Btn()
+                    Button :
+                        text: '2'
+                        on_press: Arrets.text = self.text
+                        on_release: root.Btn()
+                    Button :
+                        text: '3'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '4'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '5'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '6'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '7'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '8'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '9'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'a'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'z'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'e'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'r'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 't'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'y'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'u'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'i'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'o'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '+'
+                        on_press: entry.text +='+'
+                    
+                    Button :
+                        text: 'q'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 's'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'd'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'f'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'g'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'h'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'j'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'k'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'l'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '<--'
+                        on_press: entry.text = entry.text[0 : len(entry.text)-1]
+                        
+                    Button :
+                        text: 'w'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'x'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'c'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'v'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'b'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'n'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'm'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'p'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '/'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: ':'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'A'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'Z'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'E'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'R'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'T'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'Y'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'U'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'I'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'O'
+                        on_press: entry.text +=self.text
+                    
+                    Button :
+                        text: 'Q'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'S'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'D'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'F'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'G'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'H'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'J'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'K'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'L'
+                        on_press: entry.text +=self.text
+                        
+                    Button :
+                        text: 'W'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'X'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'C'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'V'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'B'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'N'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'M'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: 'P'
+                        on_press: entry.text +=self.text
+                    Button :
+                        text: '______'                       
+                        on_press: entry.text +=' '
+                        size_hint: 1 ,0.7
+                        
+                        
+                    Button :
+                        text: 'Entrer'
+                        size_hint:0.5,0.7
+                        font_size:20
+                        
+                        background_color: (0,255,0,1.0)
+                        on_press: root.Btn_keyboard_text()
+
+
+                            
+        Screen:
+            name: 'identification'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                Label:
+                    font_size:50
+                    text: ' Validation de démarrage'
+                    color:[0,0,1,1]
+                    size_hint:1,0.3
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    GridLayout:
+                        padding:[40,0,40,0]
+                        spacing:10
+                        cols: 1
+                        Label:
+                          
+                            text: 'Identification Régleur'
+                            color : 1,0,0,1
+                            
+                        GridLayout:
+                            cols: 2
+                            Button:
+                                id: id_regleur
+                                text: 'Matricule'
+                                background_color: (1,1,1,1)
+                                color : 0,0,0,1
+                              
+                                on_press: root.Btn_id_regleur()
+                                
+                            Button:
+                                id : pw_regleur
+                                text: 'Mot de Pass'
+                                background_color: (1,1,1,1)
+                          
+                                color : 0,0,0,1
+                                on_press: root.Btn_pw_regleur()
+                        GridLayout:
+                            cols: 2    
+                            Button:
+                                id : valide_setting
+                                text: 'Reglage Validé'
+                                background_color: (0,0,1,1)
+                        
+                                color : 1,1,1,1
+                                on_press: root.Btn_valide_regleur()
+                            Spinner:
+                                id : spin3
+                                text: 'Problèmes Reglage'
+                                background_color: (1,0,0,1)
+                                color : 1,1,1,1
+                                values:['Probleme moule','Manque périphérique','Manque Régleur','Manque opérateur','Manque matiére premiere','Manque changement(non planifier)','Panne presse(maintenance)','Attente Validation Produit','Presse réservé(process)','en cours de démarrage','en cours de changemnets']
+                                
+                                on_text:root.on_spinner_select2(self.text)
+                                                        
+                        Label:
+                            text: 'Identification Qualité'
+                            color : 1,0,0,1
+                           
+                            
+                        GridLayout:
+                            cols: 2
+                            Button:
+                                id : id_qualite
+                                text: 'Matricule'
+                                background_color: (1,1,1,1)
+                                color : 0,0,0,1
+                               
+                                on_press: root.Btn_id_qualite()
+                            Button:
+                                id : pw_qualite
+                                text: 'Mot de Pass'
+                                background_color: (1,1,1,1)
+                             
+                                color : 0,0,0,1
+                                on_press: root.Btn_pw_qualite()
+                        GridLayout:
+                            cols:2
+                            Button:
+                                id : valide_qualite
+                            
+                                text: 'Qualité Validé '
+                                background_color: (0,0,1,1)
+                                color : 1,1,1,1
+                                on_press: root.Btn_valide_qualite()
+                            Button:
+                                id : no_valide_q_setting
+                                text: 'Qualité non Validé'
+                                background_color: (1,0,0,1)
+                        
+                                color : 1,1,1,1
+                                on_press: root.Btn_no_valide_qualite()
+                            
+                    Button:
+                        text: 'Debut de Production'
+                        size_hint: 1 ,0.2
+                        background_color: [0,255,0,1.0]
+                        color:0,0,0,1   
+                        on_press: root.Btn_start_production()
+
+            
+        Screen:
+            name: 'liste'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1 , 0.3
+                    Image:
+                        size_hint:  0.3, 1
+                        source: 'Image/Bulgin.jpg'
+                    Label:
+                        id :typeliste
+                
+                        text: 'Manque équippement'
+                        color : 0.68,1,0.68, 1
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    GridLayout:
+                        padding:[40,0,40,0]
+                        spacing:10
+                        cols: 2
+                        
+                        Button:
+                            id:equippement1
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 550
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_add_equippement1()
+                        Button:
+                            id:annule1
+                            text: ''
+                            color : 0,0,0,1                            
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule_equippement1()       
+                        Button:
+                            id:equippement2
+                            text: ''
+                            size_hint_x : None
+                            width : 550
+                            color : 1,1,1,1
+                            background_color: (1,1,1,0) 
+                            on_press: root.Btn_add_equippement2()
+                        Button:
+                            id:annule2
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule_equippement2()
+                        
+                            
+                        Button:
+                            id:equippement3
+                            text: ''
+                            size_hint_x : None
+                            width : 550
+                            background_color: (1,1,1,0) 
+                            color : 1,1,1,1
+                            on_press: root.Btn_add_equippement3()
+                        Button:
+                            id:annule3
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule_equippement3()
+                            
+                        Button:
+                            id:equippement4
+                            text: ''
+                            size_hint_x : None
+                            width : 550
+                            background_color: (1,1,1,0) 
+                            color :  1,1,1,1
+                            on_press: root.Btn_add_equippement4()
+                        Button:
+                            id:annule4
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule_equippement4()
+
+                            
+                        Button:
+                            id:equippement5
+                            background_color: (1,1,1,0) 
+                            text: ''
+                            size_hint_x : None
+                            width : 550
+                            color : 1,1,1,1
+                            on_press: root.Btn_add_equippement5()
+
+                        Button:
+                            id:annule5
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule_equippement5()
+                    GridLayout:
+                        size_hint: 1 ,0.2
+                        cols: 2
+                        Button:
+                            id : Btn_list_1
+                            text: 'Fin ordre de fabrication'
+                            size_hint: 1 ,0.2
+                            background_color: (0,0,1,1)   
+                            on_press: root.Btn_fin_shop_oder()
+                        Button:
+                            id : Btn_list_2
+                            text: 'Fin Arrêt'
+                            background_color: (1,0,0,1)   
+                            on_press: root.Btn_finEquippement()
+
+
+        Screen:
+            name: 'declaration'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+               
+                BoxLayout:
+                    
+                    orientation: 'vertical'
+                    spacing:10
+                    Label:
+                        id : declaration_arret
+                        text: 'Déclaration Arrêt'
+                        color : 0.68,1,0.68, 1
+                        size_hint : 1 ,0.7
+                    Label :
+                        id : entry2
+                        color: 1,0,0,1
+                        size_hint : 1 ,0.3
+                        size_font : 24
+                        canvas.before:
+                            Color:
+                                rgba: 255,255,255,255
+                            Rectangle:
+                                pos : self.pos
+                                size: self.size
+                    
+
+                    GridLayout:
+                        padding:[20,0,20,0]
+                        cols: 1             
+                        GridLayout:
+                            cols: 10
+                            rows : 4                              
+                            Button :
+                                text: 'a'
+                                on_press:
+                                    if len(entry2.text) < 120 :entry2.text +=self.text
+                                    
+                            Button :
+                                text: 'z'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'e'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'r'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 't'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'y'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'u'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'i'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'o'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Label:
+                           
+                            
+                            Button :
+                                text: 'q'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 's'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'd'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'f'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text) == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'g'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text) == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'h'
+                                on_press:
+                                    if len(entry2.text) ==60 :entry2.text += '\n' + self.text
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                            Button :
+                                text: 'j'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text) == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'k'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'l'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'Enter'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +='\n'
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'w'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'x'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                                        
+                            Button :
+                                text: 'c'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'v'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'b'
+                                on_press:
+                                    if len(entry2.text)< 120 :entry2.text +=self.text
+                                    if len(entry2.text)  == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'n'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text)  == 60 :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'm'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text) == 60  :entry2.text += '\n' + self.text
+                            Button :
+                                text: 'p'
+                                on_press:
+                                    if len(entry2.text)< 120:entry2.text +=self.text
+                                    if len(entry2.text) == 60  :entry2.text += '\n' + self.text
+                            Label:
+                            Button :
+                                text: '<--'
+                                on_press:
+                                    if len(entry2.text)> 0 :entry2.text = entry2.text[0 : len(entry2.text)-1]
+                                    
+                        Button :
+                            text: '______'
+                            on_press:
+                                if len(entry2.text)< 120 :entry2.text +=' '
+                                if len(entry2.text) == 60 :entry2.text += '\n'
+                            size_hint: 1 ,0.3
+                    GridLayout:
+                        size_hint: 1 ,0.2
+                        cols: 2
+                        Button:
+                            text: 'Annuler'
+                            size_hint: 1 ,0.2
+                            background_color: (0,0,1,1)
+                            on_press : root.Btn_annuler()
+                        Button:
+                            text: 'Déclaration Arrêt'
+                            background_color: (1.0,0.0,0.0,1.0)
+                            on_press : root.Btn_declaration()
+
+
+        Screen:
+            name: 'ferme_emprient'
+            BoxLayout:
+                orientation: 'vertical'
+                padding:[40,20,40,20]
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: 1 , 0.3
+                    Image:
+                        size_hint:  0.3, 1
+                        source: 'Image/Bulgin.jpg'
+                    Label:
+                        id :typeliste
+                
+                        text: 'Fermé un emprient'
+                        color : 0.68,1,0.68, 1
+                BoxLayout:
+                    size_hint: 1 , 0.7
+                    orientation: 'vertical'
+                    spacing:10
+                    GridLayout:
+                        id: grid
+                        padding:[40,0,40,0]
+                        spacing:10
+                        cols: 3
+                        
+                        Button:
+                            id: emprient1
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 100
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_emprient1()
+                        Button:
+                            id: description1
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 450
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_description1()
+                        Button:
+                            id:emprient_annule1
+                            text: ''
+                            color : 0,0,0,1                            
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule1()
+                            
+                        Button:
+                            id:emprient2
+                            text: ''
+                            size_hint_x : None
+                            width : 100
+                            color : 1,1,1,1
+                            background_color: (1,1,1,0) 
+                            on_press: root.Btn_emprient2()
+                        Button:
+                            id: description2
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 450
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_description2()
+                        Button:
+                            id:emprient_annule2
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule2()
+                        
+                            
+                        Button:
+                            id:emprient3
+                            text: ''
+                            size_hint_x : None
+                            width : 100
+                            background_color: (1,1,1,0) 
+                            color : 1,1,1,1
+                            on_press: root.Btn_emprient3()
+                        Button:
+                            id: description3
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 450
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_description3()
+                        Button:
+                            id:emprient_annule3
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule3()
+                            
+                        Button:
+                            id:emprient4
+                            text: ''
+                            size_hint_x : None
+                            width : 100
+                            background_color: (1,1,1,0) 
+                            color :  1,1,1,1
+                            on_press: root.Btn_emprient4()
+                        Button:
+                            id: description4
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 450
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_description4()
+                        Button:
+                            id:emprient_annule4
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule4()
+
+                            
+                        Button:
+                            id:emprient5
+                            background_color: (1,1,1,0) 
+                            text: ''
+                            size_hint_x : None
+                            width : 100
+                            color : 1,1,1,1
+                            on_press: root.Btn_emprient5()
+                        Button:
+                            id: description5
+                            text: '+'
+                            color : 1,1,1,1
+                            size_hint_x : None
+                            width : 450
+                            background_color: (0,0,1,1) 
+                            on_press: root.Btn_description5()
+
+                        Button:
+                            id:emprient_annule5
+                            text: ''
+                            color : 0,0,0,1
+                            background_color: (1,0,0,0) 
+                            on_press: root.Btn_annule5()
+                    GridLayout:
+                        size_hint: 1 ,0.2
+                        cols: 1
+                        Button:
+                            id : fin_fermeture_emprient
+                            text: 'Fin liste des emprients fermé'
+                            size_hint: 1 ,0.2
+                            background_color: (0,0,1,1)   
+                            on_press: root.Btn_fin_fermeture_emprient()
+                        
+
+
+
+
+
+
+                            
+                            
